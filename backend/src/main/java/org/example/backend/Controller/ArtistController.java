@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ArtistController {
     }
 
     @GetMapping("/artists")
-    public ResponseEntity<Artist> getArtist(){
+    public ResponseEntity<Artist> getArtist(@RequestParam Long id){
 
     }
 
