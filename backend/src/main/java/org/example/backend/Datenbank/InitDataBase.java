@@ -57,20 +57,18 @@ public class InitDataBase {
 
             for (Event event : events) {
                 List<Artist> realArtists = new ArrayList<>();
+                if(event.getArtistNames() != null) {
+                    for (String fullName : event.getArtistNames()) {
+                        String[] parts = fullName.split(" ", 2);
+                        String firstName = parts[0];
+                        String lastName = parts.length > 1 ? parts[1] : "";
 
-                for (Object a : event.getArtists()) {
-                    String fullName = (String) a;
-                    String[] parts = fullName.split(" ", 2);
-                    String firstname = parts[0];
-                    String lastname = parts.length > 1 ? parts[1] : "";
-
-                    artistRepository.findByFirstNameAndLastName(firstname, lastname)
-                            .ifPresent(realArtists::add);
+                        artistRepository.findByFirstNameAndLastName(firstName, lastName)
+                                .ifPresent(realArtists::add);
+                    }
                 }
-
                 event.setArtists(realArtists);
             }
-
             eventRepository.saveAll(events);
 
         } catch (Exception e) {
