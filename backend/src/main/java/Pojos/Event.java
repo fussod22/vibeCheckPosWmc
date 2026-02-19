@@ -39,7 +39,7 @@ public class Event {
 
 
     @OneToMany
-
+    @JoinColumn(name= "rating_id")
     private List<Rating> rating;
 
 }
