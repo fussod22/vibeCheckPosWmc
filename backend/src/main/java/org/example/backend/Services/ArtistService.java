@@ -1,19 +1,17 @@
-package Services;
+package org.example.backend.Services;
 
-import Pojos.Artist;
-import Repositorys.ArtistRepository;
-import lombok.NoArgsConstructor;
+import org.example.backend.Pojos.Artist;
+import org.example.backend.Repositorys.ArtistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@NoArgsConstructor
 @RequiredArgsConstructor
 public class ArtistService {
 
-    ArtistRepository artistRepository;
+    private final ArtistRepository artistRepository;
 
     public List<Artist> getAllArtist(){
         List<Artist> artists = artistRepository.findAll();

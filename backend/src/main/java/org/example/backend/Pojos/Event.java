@@ -1,4 +1,4 @@
-package Pojos;
+package org.example.backend.Pojos;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -39,6 +39,6 @@ public class Event {
 
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<Rating> rating;
+    private List<Rating> ratings;
 
 }

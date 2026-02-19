@@ -1,7 +1,7 @@
-package Controller;
+package org.example.backend.Controller;
 
-import Pojos.Artist;
-import Services.ArtistService;
+import org.example.backend.Pojos.Artist;
+import org.example.backend.Services.ArtistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

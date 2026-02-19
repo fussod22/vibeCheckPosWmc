@@ -1,16 +1,15 @@
-package Datenbank;
+package org.example.backend.Datenbank;
 
-import Pojos.Artist;
-import Pojos.Event;
-import Repositorys.ArtistRepository;
-import Repositorys.EventRepository;
+import org.example.backend.Pojos.Artist;
+import org.example.backend.Pojos.Event;
+import org.example.backend.Repositorys.ArtistRepository;
+import org.example.backend.Repositorys.EventRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import javax.xml.stream.util.EventReaderDelegate;
 import java.io.InputStream;
 import java.util.List;
 

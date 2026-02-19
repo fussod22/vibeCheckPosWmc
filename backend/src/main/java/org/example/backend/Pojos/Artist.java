@@ -1,4 +1,4 @@
-package Pojos;
+package org.example.backend.Pojos;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

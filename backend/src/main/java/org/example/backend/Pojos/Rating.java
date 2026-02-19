@@ -1,4 +1,4 @@
-package Pojos;
+package org.example.backend.Pojos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

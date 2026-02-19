@@ -1,6 +1,6 @@
-package Repositorys;
+package org.example.backend.Repositorys;
 
-import Pojos.Artist;
+import org.example.backend.Pojos.Artist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
