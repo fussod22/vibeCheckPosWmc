@@ -38,7 +38,7 @@ public class Event {
 
 
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Rating> rating;
 
 }
