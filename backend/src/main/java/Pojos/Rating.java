@@ -22,7 +22,7 @@ public class Rating {
 
     private String comment;
 
-    @JsonFormat(pattern = "yyyy-dd-MM hh:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
 
     @ManyToOne
