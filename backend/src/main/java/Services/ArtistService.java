@@ -16,6 +16,7 @@ public class ArtistService {
     ArtistRepository artistRepository;
 
     public List<Artist> getAllArtist(){
-        List<Artist> artists =
+        List<Artist> artists = artistRepository.findAll();
+        return artists;
     }
 }
