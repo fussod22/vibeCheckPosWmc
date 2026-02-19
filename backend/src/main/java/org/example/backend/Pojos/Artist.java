@@ -1,5 +1,6 @@
 package org.example.backend.Pojos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,5 +27,6 @@ public class Artist {
     private String imageUrl;
 
     @ManyToMany(mappedBy = "artists")
+    @JsonBackReference
     private List<Event> events;
 }

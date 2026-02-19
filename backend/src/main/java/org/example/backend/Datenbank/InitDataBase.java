@@ -67,7 +67,7 @@ public class InitDataBase {
                         String lastName = parts.length > 1 ? parts[1] : "";
 
                         artistRepository
-                                .findByFirstNameAndLastName(firstName, lastName)
+                                .findFirstByFirstNameAndLastName(firstName, lastName)
                                 .ifPresent(realArtists::add);
                     }
                 }

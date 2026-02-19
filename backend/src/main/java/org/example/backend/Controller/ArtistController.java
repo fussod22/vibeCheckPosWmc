@@ -1,5 +1,6 @@
 package org.example.backend.Controller;
 
+import lombok.RequiredArgsConstructor;
 import org.example.backend.Pojos.Artist;
 import org.example.backend.Services.ArtistService;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,10 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ArtistController {
 
-    ArtistService artistService;
+    private final ArtistService artistService;
 
     @GetMapping("/artists")
     public ResponseEntity<List<Artist>> getAllArtists(){
