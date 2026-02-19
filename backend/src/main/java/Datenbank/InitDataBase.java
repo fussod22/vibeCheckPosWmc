@@ -4,6 +4,7 @@ import Pojos.Artist;
 import Pojos.Event;
 import Repositorys.ArtistRepository;
 import Repositorys.EventRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,6 +20,8 @@ public class InitDataBase {
 
     private final ArtistRepository artistRepository;
     private final EventRepository eventRepository;
+
+    @PostConstruct
     public void initDataBaseArtist(){
 
         try {
@@ -39,6 +42,7 @@ public class InitDataBase {
         }
     }
 
+    @PostConstruct
     public void initDataBaseEvent(){
 
         try {
