@@ -23,4 +23,8 @@ public class ArtistController {
         return ResponseEntity.ok(artists);
     }
 
+    public ResponseEntity<Artist> getArtist(){
+
+    }
+
 }
