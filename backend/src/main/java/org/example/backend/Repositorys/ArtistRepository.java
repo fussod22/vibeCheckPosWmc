@@ -11,4 +11,5 @@ public interface ArtistRepository extends JpaRepository<Artist, Long> {
 
     Optional<Artist> findFirstByFirstNameAndLastName(String firstName, String lastName);
 
+    Artist getArtistById(Long id);
 }
