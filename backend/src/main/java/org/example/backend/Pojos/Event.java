@@ -1,21 +1,23 @@
 package org.example.backend.Pojos;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.backend.Pojos.Artist;
+import org.example.backend.Pojos.Rating;
 
 import java.time.LocalDate;
 import java.util.List;
-
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Event {
 
     @Id
@@ -39,10 +41,11 @@ public class Event {
     @JsonIgnore
     private List<Artist> artists;
 
-
     @Transient
     @JsonProperty("artists")
     private List<String> artistNames;
 
-
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @JsonProperty("ratings")
+    private List<Rating> ratings;
 }
