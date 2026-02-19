@@ -1,6 +1,7 @@
 package Pojos;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class Event {
 
     private String location;
 
+    @JsonFormat(pattern = "yyyy-dd-MM")
     private LocalDate eventDate;
 
     private String imageUrl;
