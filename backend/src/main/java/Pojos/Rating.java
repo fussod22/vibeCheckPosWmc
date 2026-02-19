@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -21,4 +23,6 @@ public class Rating {
     private Integer stars;
 
     private String comment;
+
+    private LocalDateTime createdAt;
 }
