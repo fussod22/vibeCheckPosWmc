@@ -20,4 +20,7 @@ public class Event {
     private Long id;
 
     private String title;
+
+    private String location;
+
 }
