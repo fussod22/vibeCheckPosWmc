@@ -1,5 +1,6 @@
 package Pojos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,5 +25,6 @@ public class Rating {
 
     private String comment;
 
+    @JsonFormat(pattern = "yyyy-dd-MM hh:mm:ss")
     private LocalDateTime createdAt;
 }
