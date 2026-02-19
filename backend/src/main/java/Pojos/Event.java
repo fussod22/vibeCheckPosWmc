@@ -24,7 +24,7 @@ public class Event {
 
     private String location;
 
-    @JsonFormat(pattern = "yyyy-dd-MM")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventDate;
 
     private String imageUrl;
