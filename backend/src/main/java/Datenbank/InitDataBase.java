@@ -30,6 +30,8 @@ public class InitDataBase {
 
 
             artistRepository.saveAll(students);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
