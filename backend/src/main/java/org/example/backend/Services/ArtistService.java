@@ -19,6 +19,7 @@ public class ArtistService {
     }
 
     public Artist getArtistById(Long id){
-
+        Artist artist = artistRepository.getArtistById(id);
+        return artist;
     }
 }
