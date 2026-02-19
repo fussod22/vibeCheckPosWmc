@@ -23,6 +23,7 @@ public class ArtistController {
         return ResponseEntity.ok(artists);
     }
 
+    @GetMapping("/artists")
     public ResponseEntity<Artist> getArtist(){
 
     }
