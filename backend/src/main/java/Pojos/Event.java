@@ -38,8 +38,7 @@ public class Event {
 
 
 
-    @OneToMany
-    @JoinColumn(name= "rating_id")
+    @OneToMany(mappedBy = "event")
     private List<Rating> rating;
 
 }
