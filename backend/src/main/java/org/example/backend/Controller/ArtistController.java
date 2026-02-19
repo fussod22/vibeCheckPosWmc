@@ -6,6 +6,7 @@ import org.example.backend.Services.ArtistService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -24,8 +25,8 @@ public class ArtistController {
         return ResponseEntity.ok(artists);
     }
 
-    @GetMapping("/artists")
-    public ResponseEntity<Artist> getArtist(@RequestParam Long id){
+    @GetMapping("/artists/{id}")
+    public ResponseEntity<Artist> getArtist(@PathVariable Long id){
         Artist artist = artistService.getArtistById(id);
 
         return ResponseEntity.ok(artist);
