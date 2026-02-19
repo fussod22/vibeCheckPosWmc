@@ -19,4 +19,6 @@ public class Rating {
     private Long id;
 
     private Integer stars;
+
+    private String comment;
 }
