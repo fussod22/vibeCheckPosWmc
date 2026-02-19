@@ -33,7 +33,7 @@ public class Event {
     @JoinTable(
             name="event_artist",
             joinColumns = @JoinColumn(name="event_id"),
-            inverseJoinColumn = @JoinColumn(name="course_id"))
+            inverseJoinColumns = @JoinColumn(name="course_id"))
     private List<Artist> artists;
 
 }

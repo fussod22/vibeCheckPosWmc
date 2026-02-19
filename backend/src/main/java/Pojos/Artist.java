@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -25,4 +27,6 @@ public class Artist {
     private String description;
 
     private String imageUrl;
+
+    private List<Event> events;
 }
