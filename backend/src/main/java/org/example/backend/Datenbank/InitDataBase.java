@@ -20,68 +20,57 @@ public class InitDataBase {
 
     private final ArtistRepository artistRepository;
     private final EventRepository eventRepository;
+    @Component
+    @RequiredArgsConstructor
+    public class InitDataBase {
 
-    @PostConstruct
-    public void initDataBaseArtist(){
+        private final ArtistRepository artistRepository;
+        private final EventRepository eventRepository;
 
-        try {
-            InputStream inputStream = this.getClass()
-                    .getResourceAsStream("/artist.json");
-
-            ObjectMapper objectMapper = new ObjectMapper()
-                    .registerModule(new JavaTimeModule());
-
-            List<Artist> artists = objectMapper
-                    .readerForListOf(Artist.class)
-                    .readValue(inputStream);
+        @PostConstruct
+        public void init() {
+            try {
+                // 1. Artists laden
+                InputStream artistStream = this.getClass().getResourceAsStream("/artist.json");
+                ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+                List<Artist> artists = objectMapper.readerForListOf(Artist.class).readValue(artistStream);
 
 
-            artistRepository.saveAll(artists);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+                artistRepository.saveAll(artists);
 
-    @PostConstruct
-    public void initDataBaseEvent(){
-        try {
-            InputStream inputStream = this.getClass()
-                    .getResourceAsStream("/event.json");
 
-            ObjectMapper objectMapper = new ObjectMapper()
-                    .registerModule(new JavaTimeModule());
+                InputStream eventStream = this.getClass().getResourceAsStream("/event.json");
+                List<Event> events = objectMapper.readerForListOf(Event.class).readValue(eventStream);
 
-            List<Event> events = objectMapper
-                    .readerForListOf(Event.class)
-                    .readValue(inputStream);
 
-            for (Event event : events) {
+                for (Event event : events) {
+                    List<Artist> realArtists = new ArrayList<>();
 
-                List<Artist> realArtists = new ArrayList<>();
+                    if (event.getArtistNames() != null) {
+                        for (String fullName : event.getArtistNames()) {
+                            String[] parts = fullName.split(" ", 2);
+                            String firstName = parts[0];
+                            String lastName = parts.length > 1 ? parts[1] : "";
 
-                if(event.getArtistNames() != null) {
-                    for (String fullName : event.getArtistNames()) {
+                            artistRepository
+                                    .findFirstByFirstNameAndLastName(firstName, lastName)
+                                    .ifPresent(realArtists::add);
+                        }
+                    }
 
-                        String[] parts = fullName.split(" ", 2);
-                        String firstName = parts[0];
-                        String lastName = parts.length > 1 ? parts[1] : "";
+                    event.setArtists(realArtists);
 
-                        artistRepository
-                                .findFirstByFirstNameAndLastName(firstName, lastName)
-                                .ifPresent(realArtists::add);
+
+                    if (event.getRatings() != null) {
+                        event.getRatings().forEach(rating -> rating.setEvent(event));
                     }
                 }
 
-                event.setArtists(realArtists);
+                eventRepository.saveAll(events);
 
-                if(event.getRatings() != null){
-                    event.getRatings().forEach(rating -> rating.setEvent(event));
-                }
+            } catch (Exception e) {
+                throw new RuntimeException("Fehler beim Initialisieren der Datenbank", e);
             }
-            eventRepository.saveAll(events);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 }
