@@ -27,4 +27,8 @@ public class Rating {
 
     @JsonFormat(pattern = "yyyy-dd-MM hh:mm:ss")
     private LocalDateTime createdAt;
+
+    private Event event
 }
+
+
