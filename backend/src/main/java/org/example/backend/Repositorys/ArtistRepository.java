@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface ArtistRepository extends JpaRepository<Artist, Long> {
 
-    Optional<Artist> findByFirstnameAndLastname(String firstname, String lastname);
+    Optional<Artist> findByFirstNameAndLastName(String firstName, String lastName);
 
 }

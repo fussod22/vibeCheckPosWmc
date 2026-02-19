@@ -64,7 +64,7 @@ public class InitDataBase {
                     String firstname = parts[0];
                     String lastname = parts.length > 1 ? parts[1] : "";
 
-                    artistRepository.findByFirstnameAndLastname(firstname, lastname)
+                    artistRepository.findByFirstNameAndLastName(firstname, lastname)
                             .ifPresent(realArtists::add);
                 }
 

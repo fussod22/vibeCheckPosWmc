@@ -2,6 +2,8 @@ package org.example.backend.Pojos;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,14 +33,16 @@ public class Event {
 
     @ManyToMany
     @JoinTable(
-            name="event_artist",
-            joinColumns = @JoinColumn(name="event_id"),
-            inverseJoinColumns = @JoinColumn(name="artist_id"))
+            name = "event_artist",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "artist_id"))
+    @JsonIgnore
     private List<Artist> artists;
 
 
+    @Transient
+    @JsonProperty("artists")
+    private List<String> artistNames;
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<Rating> ratings;
 
 }
