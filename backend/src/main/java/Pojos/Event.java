@@ -38,6 +38,8 @@ public class Event {
 
 
 
+    @OneToMany
+
     private List<Rating> rating;
 
 }
