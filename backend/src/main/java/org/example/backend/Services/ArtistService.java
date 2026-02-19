@@ -17,4 +17,8 @@ public class ArtistService {
         List<Artist> artists = artistRepository.findAll();
         return artists;
     }
+
+    public Artist getArtistById(Long id){
+
+    }
 }
