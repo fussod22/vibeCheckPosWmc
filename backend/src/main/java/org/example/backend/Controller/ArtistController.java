@@ -27,6 +27,7 @@ public class ArtistController {
     @GetMapping("/artists")
     public ResponseEntity<Artist> getArtist(@RequestParam Long id){
         Artist artist = artistService.getArtistById(id);
+
         return ResponseEntity.ok(artist);
     }
 
