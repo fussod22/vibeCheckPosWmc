@@ -4,7 +4,8 @@ import Pojos.Artist;
 import Repositorys.ArtistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import javax.xml.stream.util.EventReaderDelegate;
 import java.io.InputStream;
@@ -14,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InitDataBase {
 
-    ArtistRepository artistRepository;
+    private final ArtistRepository artistRepository;
     public void initDataBase(){
 
         try {
