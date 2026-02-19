@@ -1,10 +1,7 @@
 package Pojos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +25,9 @@ public class Rating {
     @JsonFormat(pattern = "yyyy-dd-MM hh:mm:ss")
     private LocalDateTime createdAt;
 
-    private Event event
+    @ManyToOne
+
+    private Event event;
 }
 
 
