@@ -25,6 +25,6 @@ public class Artist {
 
     private String imageUrl;
 
-    @ManyToMany(mappedBy = "event")
+    @ManyToMany(mappedBy = "artists")
     private List<Event> events;
 }
