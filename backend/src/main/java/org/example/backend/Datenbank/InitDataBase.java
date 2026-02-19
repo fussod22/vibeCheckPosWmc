@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -43,7 +44,6 @@ public class InitDataBase {
 
     @PostConstruct
     public void initDataBaseEvent(){
-
         try {
             InputStream inputStream = this.getClass()
                     .getResourceAsStream("/event.json");
@@ -55,8 +55,24 @@ public class InitDataBase {
                     .readerForListOf(Event.class)
                     .readValue(inputStream);
 
+            for (Event event : events) {
+                List<Artist> realArtists = new ArrayList<>();
+
+                for (Object a : event.getArtists()) {
+                    String fullName = (String) a;
+                    String[] parts = fullName.split(" ", 2);
+                    String firstname = parts[0];
+                    String lastname = parts.length > 1 ? parts[1] : "";
+
+                    artistRepository.findByFirstnameAndLastname(firstname, lastname)
+                            .ifPresent(realArtists::add);
+                }
+
+                event.setArtists(realArtists);
+            }
 
             eventRepository.saveAll(events);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
