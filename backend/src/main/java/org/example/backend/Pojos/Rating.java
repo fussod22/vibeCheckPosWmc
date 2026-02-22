@@ -1,5 +1,6 @@
 package org.example.backend.Pojos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class Rating {
 
     @ManyToOne
     @JoinColumn(name="event_id")
+    @JsonBackReference
     private Event event;
 }
 
