@@ -21,6 +21,7 @@ public class RatingController {
 
     @GetMapping("/event/{eventId}")
     public ResponseEntity<List<Rating>> getRatingsByEvent(@PathVariable Long eventId) {
-
+        List<Rating> ratings = ratingService.getRatingsByEventId(eventId);
+        return ResponseEntity.ok(ratings);
     }
 }
