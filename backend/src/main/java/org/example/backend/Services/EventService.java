@@ -24,7 +24,7 @@ public class EventService {
     }
 
     public List<Event> getEventByArtistId(Long id){
-        List<Event> events = eventRepository.findEventByArtist_Id(id);
+        List<Event> events = eventRepository.findByArtists_Id(id);
         return events;
     }
 }
