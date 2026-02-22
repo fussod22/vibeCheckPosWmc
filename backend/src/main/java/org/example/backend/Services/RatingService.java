@@ -1,11 +1,13 @@
 package org.example.backend.Services;
 
 import lombok.RequiredArgsConstructor;
+import org.example.backend.Pojos.Event;
 import org.example.backend.Pojos.Rating;
 import org.example.backend.Repositorys.EventRepository;
 import org.example.backend.Repositorys.RatingRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,6 +20,10 @@ public class RatingService {
     public List<Rating> getRatingsByEventId(Long id) {
         List<Rating> ratings = ratingRepository.findByEventId(id);
         return ratings;
+    }
+
+    public Rating addRating(Long eventId, Rating rating) {
+
     }
 
 
