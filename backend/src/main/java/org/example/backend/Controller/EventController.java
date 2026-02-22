@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,11 +21,17 @@ public class EventController {
 
     private final EventService eventService;
 
-    @GetMapping("/artists")
+    @GetMapping("/events")
     public ResponseEntity<List<Event>> getAllEvents(){
         List<Event> events = eventService.getAllEvents();
         return ResponseEntity.ok(events);
     }
+
+    @GetMapping("/event/{id}")
+    public ResponseEntity<Event> getEvent(@PathVariable Long id){
+
+    }
+
 
 
 }
