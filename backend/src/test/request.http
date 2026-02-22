@@ -6,3 +6,6 @@ GET http://localhost:8080/api/artists/1
 
 ###
 GET http://localhost:8080/api/events
+
+###
+GET http://localhost:8080/api/event/1
