@@ -15,8 +15,10 @@ public class RatingService {
     private final RatingRepository ratingRepository;
     private final EventRepository eventRepository;
 
-    public List<Rating> getRatingsByEvent(Long id) {
+    public List<Rating> getRatingsByEventId(Long id) {
         List<Rating> ratings = ratingRepository.findByEventId(id);
         return ratings;
     }
+
+
 }
