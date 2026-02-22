@@ -22,4 +22,6 @@ public class EventService {
         Event event = eventRepository.findEventById(id);
         return event;
     }
+
+    public List<Event> getEventByArtistId(Long id)
 }
