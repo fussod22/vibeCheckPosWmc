@@ -19,6 +19,7 @@ public class EventService {
     }
 
     public Event getEvent(Long id){
-
+        Event event = eventRepository.findEventById(id);
+        return event;
     }
 }
