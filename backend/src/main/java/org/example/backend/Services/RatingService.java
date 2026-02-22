@@ -23,7 +23,12 @@ public class RatingService {
     }
 
     public Rating addRating(Long eventId, Rating rating) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new RuntimeException("Event not found with id " + eventId));
 
+        rating.setEvent(event);
+        rating.setCreatedAt(LocalDateTime.now());
+        return ratingRepository.save(rating);
     }
 
 
