@@ -45,5 +45,6 @@ public class Event {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     @JsonProperty("ratings")
+    @JsonManagedReference
     private List<Rating> ratings;
 }
