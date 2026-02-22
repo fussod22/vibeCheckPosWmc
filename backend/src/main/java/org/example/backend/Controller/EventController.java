@@ -27,10 +27,15 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
-    @GetMapping("/event/{id}")
+    @GetMapping("/events/{id}")
     public ResponseEntity<Event> getEvent(@PathVariable Long id){
         Event event = eventService.getEvent(id);
         return ResponseEntity.ok(event);
+    }
+
+    @GetMapping("/events/artist/{id}")
+    public ResponseEntity<List<Event>> getEventbyArtist(@PathVariable Long id){
+
     }
 
 
