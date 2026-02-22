@@ -25,6 +25,7 @@ public class RatingController {
 
     @PostMapping("/{eventId}")
     public ResponseEntity<Rating> addRating(@PathVariable Long eventId, @RequestBody Rating rating) {
-
+        Rating savedRating = ratingService.addRating(eventId, rating);
+        return ResponseEntity.ok(savedRating);
     }
 }
