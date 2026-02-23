@@ -11,7 +11,7 @@ export type Rating = {
     id: number;
     stars: number;
     comment: string;
-    createdAt: string; // ISO String vom Backend
+    createdAt: string;
     eventId: number;
 };
 
@@ -19,8 +19,9 @@ export type Event = {
     id: number;
     title: string;
     location: string;
-    eventDate: string; // ISO Date
+    eventDate: string;
     imageUrl: string;
     artistIds: number[];
+    avgRating: number;
     ratings: Rating[];
 };

@@ -38,7 +38,6 @@ public class EventService {
                 .toList();
     }
 
-    // 🔹 MAPPING
     private EventDto mapToDto(Event event) {
 
         EventDto dto = new EventDto();
@@ -57,7 +56,6 @@ public class EventService {
                         .toList()
         );
 
-        // 🔥 Ratings mappen
         List<RatingDto> ratingDtos = event.getRatings()
                 .stream()
                 .map(rating -> {

@@ -36,11 +36,11 @@ public class Event {
             name = "event_artist",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "artist_id"))
-    @JsonIgnore // Jackson soll das Feld nicht direkt aus JSON befüllen
+    @JsonIgnore
     private List<Artist> artists = new ArrayList<>();
 
     @Transient
-    @JsonProperty("artists") // hier kommt die Liste der Künstlernamen aus JSON rein
+    @JsonProperty("artists")
     private List<String> artistNames = new ArrayList<>();
 
     @JsonSetter("artists")
