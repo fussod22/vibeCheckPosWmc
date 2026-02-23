@@ -15,5 +15,6 @@ public class EventDto {
 
     private List<Long> artistIds;
 
-    private Double averageRating;
+
+    private List<RatingDto> ratings;
 }

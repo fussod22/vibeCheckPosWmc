@@ -1,6 +1,8 @@
 package org.example.backend.Services;
 
 import lombok.RequiredArgsConstructor;
+import org.example.backend.DTOs.EventDto;
+import org.example.backend.DTOs.RatingDto;
 import org.example.backend.Pojos.Event;
 import org.example.backend.Repositorys.EventRepository;
 import org.springframework.stereotype.Service;
@@ -13,18 +15,63 @@ public class EventService {
 
     private final EventRepository eventRepository;
 
-    public List<Event> getAllEvents(){
-        List<Event> events = eventRepository.findAll();
-        return events;
+    public List<EventDto> getAllEvents() {
+        return eventRepository.findAll()
+                .stream()
+                .map(this::mapToDto)
+                .toList();
     }
 
-    public Event getEvent(Long id){
-        Event event = eventRepository.findEventById(id);
-        return event;
+
+    public EventDto getEvent(Long id) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event nicht gefunden: " + id));
+
+        return mapToDto(event);
     }
 
-    public List<Event> getEventByArtistId(Long id){
-        List<Event> events = eventRepository.findByArtists_Id(id);
-        return events;
+
+    public List<EventDto> getEventByArtistId(Long id) {
+        return eventRepository.findByArtists_Id(id)
+                .stream()
+                .map(this::mapToDto)
+                .toList();
+    }
+
+    // 🔹 MAPPING
+    private EventDto mapToDto(Event event) {
+
+        EventDto dto = new EventDto();
+
+        dto.setId(event.getId());
+        dto.setTitle(event.getTitle());
+        dto.setLocation(event.getLocation());
+        dto.setEventDate(event.getEventDate());
+        dto.setImageUrl(event.getImageUrl());
+
+        // Artist IDs
+        dto.setArtistIds(
+                event.getArtists()
+                        .stream()
+                        .map(artist -> artist.getId())
+                        .toList()
+        );
+
+        // 🔥 Ratings mappen
+        List<RatingDto> ratingDtos = event.getRatings()
+                .stream()
+                .map(rating -> {
+                    RatingDto r = new RatingDto();
+                    r.setId(rating.getId());
+                    r.setStars(rating.getStars());
+                    r.setComment(rating.getComment());
+                    r.setEventId(event.getId());
+                    return r;
+                })
+                .toList();
+
+        dto.setRatings(ratingDtos);
+
+        return dto;
     }
 }
