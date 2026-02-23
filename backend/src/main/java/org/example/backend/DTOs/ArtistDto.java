@@ -4,13 +4,13 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ArtistDto{
+public class ArtistDto {
 
     private Long id;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String description;
     private String imageUrl;
 
-    // nur Event IDs, KEINE ganzen Events!
     private List<Long> eventIds;
 }

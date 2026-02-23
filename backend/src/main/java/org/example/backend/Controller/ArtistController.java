@@ -1,35 +1,30 @@
 package org.example.backend.Controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.backend.Pojos.Artist;
+import org.example.backend.DTOs.ArtistDto;
 import org.example.backend.Services.ArtistService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class ArtistController {
 
     private final ArtistService artistService;
 
+
     @GetMapping("/artists")
-    public ResponseEntity<List<Artist>> getAllArtists(){
-        List<Artist> artists = artistService.getAllArtist();
-        return ResponseEntity.ok(artists);
+    public ResponseEntity<List<ArtistDto>> getAllArtists() {
+        return ResponseEntity.ok(artistService.getAllArtist());
     }
+
 
     @GetMapping("/artists/{id}")
-    public ResponseEntity<Artist> getArtist(@PathVariable Long id){
-        Artist artist = artistService.getArtistById(id);
-
-        return ResponseEntity.ok(artist);
+    public ResponseEntity<ArtistDto> getArtist(@PathVariable Long id) {
+        return ResponseEntity.ok(artistService.getArtistById(id));
     }
-
 }
