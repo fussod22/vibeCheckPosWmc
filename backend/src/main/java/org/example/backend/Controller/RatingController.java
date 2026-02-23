@@ -1,31 +1,36 @@
 package org.example.backend.Controller;
 
-
 import lombok.RequiredArgsConstructor;
-import org.example.backend.Pojos.Rating;
+import org.example.backend.DTOs.RatingDto;
 import org.example.backend.Services.RatingService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+@RequestMapping("/api/ratings")
 @RequiredArgsConstructor
 public class RatingController {
 
     private final RatingService ratingService;
 
+
     @GetMapping("/event/{eventId}")
-    public ResponseEntity<List<Rating>> getRatingsByEvent(@PathVariable Long eventId) {
-        List<Rating> ratings = ratingService.getRatingsByEventId(eventId);
-        return ResponseEntity.ok(ratings);
+    public ResponseEntity<List<RatingDto>> getRatingsByEvent(@PathVariable Long eventId) {
+        return ResponseEntity.ok(ratingService.getRatingsByEventId(eventId));
     }
 
+
     @PostMapping("/{eventId}")
-    public ResponseEntity<Rating> addRating(@PathVariable Long eventId, @RequestBody Rating rating) {
-        Rating savedRating = ratingService.addRating(eventId, rating);
-        return ResponseEntity.ok(savedRating);
+    public ResponseEntity<RatingDto> addRating(
+            @PathVariable Long eventId,
+            @RequestBody RatingDto ratingDto) {
+
+        RatingDto saved = ratingService.addRating(eventId, ratingDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 }

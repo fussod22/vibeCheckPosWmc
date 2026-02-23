@@ -1,6 +1,7 @@
 package org.example.backend.Services;
 
 import lombok.RequiredArgsConstructor;
+import org.example.backend.DTOs.RatingDto;
 import org.example.backend.Pojos.Event;
 import org.example.backend.Pojos.Rating;
 import org.example.backend.Repositorys.EventRepository;
@@ -17,19 +18,39 @@ public class RatingService {
     private final RatingRepository ratingRepository;
     private final EventRepository eventRepository;
 
-    public List<Rating> getRatingsByEventId(Long id) {
-        List<Rating> ratings = ratingRepository.findByEventId(id);
-        return ratings;
+    public List<RatingDto> getRatingsByEventId(Long eventId) {
+        return ratingRepository.findByEventId(eventId)
+                .stream()
+                .map(this::mapToDto)
+                .toList();
     }
 
-    public Rating addRating(Long eventId, Rating rating) {
+    public RatingDto addRating(Long eventId, RatingDto ratingDto) {
+
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Event not found with id " + eventId));
 
-        rating.setEvent(event);
+        Rating rating = new Rating();
+        rating.setStars(ratingDto.getStars());
+        rating.setComment(ratingDto.getComment());
         rating.setCreatedAt(LocalDateTime.now());
-        return ratingRepository.save(rating);
+        rating.setEvent(event);
+
+        Rating saved = ratingRepository.save(rating);
+
+        return mapToDto(saved);
     }
 
+    private RatingDto mapToDto(Rating rating) {
 
+        RatingDto dto = new RatingDto();
+
+        dto.setId(rating.getId());
+        dto.setStars(rating.getStars());
+        dto.setComment(rating.getComment());
+        dto.setCreatedAt(rating.getCreatedAt());
+        dto.setEventId(rating.getEvent().getId());
+
+        return dto;
+    }
 }
