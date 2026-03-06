@@ -5,6 +5,10 @@ import org.example.backend.DTOs.EventDto;
 import org.example.backend.DTOs.RatingDto;
 import org.example.backend.Pojos.Event;
 import org.example.backend.Repositorys.EventRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +40,18 @@ public class EventService {
                 .stream()
                 .map(this::mapToDto)
                 .toList();
+    }
+
+    public Page<EventDto> getEventPaged(Integer page, Integer size, String orderBy, String sortBy){
+        Sort sort = sortBy.equals("desc")
+                ? Sort.by(orderBy).descending()
+                : Sort.by(orderBy).ascending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Event> events = eventRepository.findAll(pageable);
+
+
+        return events.map(this::mapToDto);
     }
 
     private EventDto mapToDto(Event event) {

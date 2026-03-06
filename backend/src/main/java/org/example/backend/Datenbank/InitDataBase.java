@@ -20,6 +20,7 @@ public class InitDataBase {
     private final ArtistRepository artistRepository;
     private final EventRepository eventRepository;
 
+
     @PostConstruct
     public void initDatabase() {
         try {
@@ -64,4 +65,5 @@ public class InitDataBase {
             throw new RuntimeException("Fehler beim Initialisieren der Datenbank", e);
         }
     }
+
 }

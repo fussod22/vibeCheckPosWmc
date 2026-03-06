@@ -17,4 +17,5 @@ public class EventDto {
 
 
     private List<RatingDto> ratings;
+
 }

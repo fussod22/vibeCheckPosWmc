@@ -25,3 +25,6 @@ Content-Type: application/json
     "stars": 5,
     "comment": "Absolutely loved it!"
 }
+
+###
+GET http://localhost:8080/api/events_pageable?page=1&size=3&orderBy=title&sortBy=asc

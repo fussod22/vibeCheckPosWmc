@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +25,7 @@ public class Rating {
     private String comment;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @ManyToOne
