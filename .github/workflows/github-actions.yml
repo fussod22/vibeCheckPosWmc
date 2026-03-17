@@ -3,7 +3,7 @@ name: Build & Push Docker Backend
 on:
   push:
     branches:
-      - main   # nur bei Pushes auf main
+      - main
 
 jobs:
   build-and-push:
@@ -12,19 +12,36 @@ jobs:
     steps:
       # 1️⃣ Repository auschecken
       - name: Checkout repository
+        uses: actions/checkout@v5
+
+      # 2️⃣ Java Setup
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      # 3️⃣ Docker Login zu GHCR
+      - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21' 
-          chache: 'maven'
+
+      # 4️⃣ Build Backend JAR
       - name: Build with Maven
-        run: echo "now we build..." 
+        run: |
+          cd backend
+          ./mvnw clean package -DskipTests
+
+      # 5️⃣ Docker Image bauen
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/fussod22/backend:latest ./backend
+
+      # 6️⃣ Docker Image pushen
       - name: Push Docker image
         run: |
           docker push ghcr.io/fussod22/backend:latest
