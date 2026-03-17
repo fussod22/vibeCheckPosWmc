@@ -1,0 +1,33 @@
+name: Build & Push Docker Backend
+
+on:
+  push:
+    branches:
+      - main  # oder master / dein Entwicklungsbranch
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Repository auschecken
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      # 2️⃣ Docker Login zu GitHub Container Registry
+      - name: Log in to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_PAT }}  # den PAT, den du vorher erstellt hast
+
+      # 3️⃣ Docker Image bauen
+      - name: Build Docker image
+        run: |
+          docker build -t ghcr.io/fussod22/backend:latest ./backend
+
+      # 4️⃣ Docker Image pushen
+      - name: Push Docker image
+        run: |
+          docker push ghcr.io/fussod22/backend:latest
