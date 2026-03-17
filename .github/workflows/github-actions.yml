@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # oder master / dein Entwicklungsbranch
+      - develop
 
 jobs:
   build-and-push:
@@ -24,8 +25,8 @@ jobs:
 
       # 3️⃣ Docker Image bauen
       - name: Build Docker image
-        run: |
-          docker build -t ghcr.io/fussod22/backend:latest ./backend
+       run: |
+            docker build -t ghcr.io/fussod22/backend:latest ./backend
 
       # 4️⃣ Docker Image pushen
       - name: Push Docker image
