@@ -9,7 +9,7 @@ import {
     fetchEventsApi,
     fetchRatingsForEventApi,
     postRatingApi,
-  fetchEventsPagedApi
+    fetchEventsPagedApi
 } from "../services/apiServer";
 
 type VibeCheckStore = {
@@ -18,15 +18,15 @@ type VibeCheckStore = {
     ratings: Rating[];
     eventsFromArtist: Event[];
 
-    sortOrder: string,
-    size: number,
+    sortOrder: string;
+    size: number;
 
-    orderBy: string,
-    setOrderBy: (order:string) => void,
+    orderBy: string;
+    setOrderBy: (order: string) => void;
 
-    page: number,
-    addPage: () => void,
-    minusPage:() => void,
+    page: number;
+    addPage: () => void;
+    minusPage: () => void;
 
     pagedEvents: Event[];
 
@@ -45,8 +45,7 @@ type VibeCheckStore = {
     fetchArtistById: (artistId: number) => Promise<void>;
     fetchEventById: (eventId: number) => Promise<void>;
     fetchEventByArtistId: (artistId: number) => Promise<void>;
-    fetchEventsPaged: (page:number, size:number, sortBy:String, sortOrder:String) => Promise<void>;
-
+    fetchEventsPaged: () => Promise<void>;
 
     setEvents: (events: Event[]) => void;
 };
@@ -64,12 +63,13 @@ export const useVibeCheckStore = create<VibeCheckStore>((set, get) => ({
     eventsFromArtist: [],
     pagedEvents: [],
 
-    sortBy: "asc",
+    sortOrder: "asc",
     size: 3,
     page: 1,
+
     orderBy: "title",
-    setOrderBy : (order) => {
-        set({orderBy:order});
+    setOrderBy: (order) => {
+        set({ orderBy: order });
     },
 
     addPage: () =>
@@ -88,6 +88,10 @@ export const useVibeCheckStore = create<VibeCheckStore>((set, get) => ({
 
     loading: false,
     error: null,
+
+    setEvents: (events) => {
+        set({ events });
+    },
 
     fetchArtists: async () => {
         set({ loading: true, error: null });
@@ -120,11 +124,15 @@ export const useVibeCheckStore = create<VibeCheckStore>((set, get) => ({
 
     fetchRating: async (eventId: number) => {
         set({ loading: true, error: null });
+
         try {
             const data = await fetchRatingsForEventApi(eventId);
             set({ ratings: data });
             const avgRating = calculateAvgRating(data);
-            set({ event: (prev) => prev ? { ...prev, avgRating } : null });
+            set({
+                event: (prev) => prev ? { ...prev, avgRating } : null
+            });
+
         } catch (err: any) {
             set({ error: err.message });
         } finally {
@@ -134,12 +142,16 @@ export const useVibeCheckStore = create<VibeCheckStore>((set, get) => ({
 
     addRating: async (eventId: number, stars: number, comment: string) => {
         set({ loading: true, error: null });
+
         try {
             await postRatingApi(eventId, { stars, comment, eventId });
             const updatedRating = await fetchRatingsForEventApi(eventId);
             set({ ratings: updatedRating });
             const avgRating = calculateAvgRating(updatedRating);
-            set({ event: (prev) => prev ? { ...prev, avgRating } : null });
+            set({
+                event: (prev) => prev ? { ...prev, avgRating } : null
+            });
+
         } catch (err: any) {
             set({ error: err.message });
         } finally {
@@ -149,11 +161,15 @@ export const useVibeCheckStore = create<VibeCheckStore>((set, get) => ({
 
     fetchEventById: async (eventId: number) => {
         set({ loading: true, error: null });
+
         try {
             const data = await fetchEventByIdApi(eventId);
             const ratings = await fetchRatingsForEventApi(data.id);
             const avgRating = calculateAvgRating(ratings);
-            set({ event: { ...data, ratings, avgRating } });
+            set({
+                event: { ...data, ratings, avgRating }
+            });
+
         } catch (err: any) {
             set({ error: err.message });
         } finally {
@@ -163,6 +179,7 @@ export const useVibeCheckStore = create<VibeCheckStore>((set, get) => ({
 
     fetchArtistById: async (artistId: number) => {
         set({ loading: true, error: null });
+
         try {
             const data = await fetchArtistByIdApi(artistId);
             set({ artist: data });
@@ -175,6 +192,7 @@ export const useVibeCheckStore = create<VibeCheckStore>((set, get) => ({
 
     fetchEventByArtistId: async (artistId: number) => {
         set({ loading: true, error: null });
+
         try {
             const data = await fetchEventByArtistIdApi(artistId);
             const eventsWithRating = data.map(event => ({
@@ -182,6 +200,7 @@ export const useVibeCheckStore = create<VibeCheckStore>((set, get) => ({
                 avgRating: calculateAvgRating(event.ratings)
             }));
             set({ eventsFromArtist: eventsWithRating });
+
         } catch (err: any) {
             set({ error: err.message });
         } finally {
@@ -189,22 +208,24 @@ export const useVibeCheckStore = create<VibeCheckStore>((set, get) => ({
         }
     },
 
-    fetchEventsPaged: async() =>{
-        const {page, size, orderBy, sortOrder} = get();
-        set({loading:true})
-        try{
+    fetchEventsPaged: async () => {
+        const { page, size, orderBy, sortOrder } = get();
+
+        set({ loading: true });
+
+        try {
             const data = await fetchEventsPagedApi(page, size, orderBy, sortOrder);
             const eventsWithRating = data.map(event => ({
                 ...event,
                 avgRating: calculateAvgRating(event.ratings)
             }));
-            set({pagedEvents:eventsWithRating});
-        }catch(err){
-            set({error:err})
-        }finally {
-            set({loading:false})
-        }
-    },
+            set({ pagedEvents: eventsWithRating });
 
+        } catch (err: any) {
+            set({ error: err.message });
+        } finally {
+            set({ loading: false });
+        }
+    }
 
 }));
