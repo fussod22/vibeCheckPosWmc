@@ -3,8 +3,7 @@ name: Build & Push Docker Backend
 on:
   push:
     branches:
-      - main  # oder master / dein Entwicklungsbranch
-      - develop
+      - main   # nur bei Pushes auf main
 
 jobs:
   build-and-push:
@@ -15,18 +14,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      # 2️⃣ Docker Login zu GitHub Container Registry
+      # 2️⃣ Docker Login zu GHCR
       - name: Log in to GHCR
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PAT }}  # den PAT, den du vorher erstellt hast
+          password: ${{ secrets.GHCR_PAT }}
 
       # 3️⃣ Docker Image bauen
       - name: Build Docker image
-       run: |
-            docker build -t ghcr.io/fussod22/backend:latest ./backend
+        run: |
+          docker build -t ghcr.io/fussod22/backend:latest ./backend
 
       # 4️⃣ Docker Image pushen
       - name: Push Docker image
