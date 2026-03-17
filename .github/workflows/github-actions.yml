@@ -12,22 +12,19 @@ jobs:
     steps:
       # 1️⃣ Repository auschecken
       - name: Checkout repository
-        uses: actions/checkout@v5
-
-      # 2️⃣ Docker Login zu GHCR
-      - name: Log in to GHCR
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}
-
-      # 3️⃣ Docker Image bauen
-      - name: Build Docker image
-        run: |
-          docker build -t ghcr.io/fussod22/backend:latest ./backend
-
-      # 4️⃣ Docker Image pushen
+      - uses: actions/checkout@v4
+      - uses: ections/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21' 
+          chache: 'maven'
+      - name: Build with Maven
+        run: echo "now we build..." 
       - name: Push Docker image
         run: |
           docker push ghcr.io/fussod22/backend:latest
